@@ -1,0 +1,77 @@
+---
+const canonicalBase = "https://www.cenam.mx/fism/";
+const pageDescription = "Foro Internacional de Semiconductores y Metrología (FISM) — 3 y 4 de noviembre de 2026 en BLOQUE, Querétaro. Organizado por CENAM y CIDESI.";
+const pageTitle = "FISM - Foro Internacional de Semiconductores y Metrología";
+---
+<!DOCTYPE html>
+<html lang="es-mx">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{pageTitle}</title>
+    <meta name="description" content={pageDescription} />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href={canonicalBase} />
+    <meta name="google-site-verification" content="sIEsnfHtjaw8DhI3KHakqntoUPxQxWzg0Rm5NPqRCUM" />
+
+    <link rel="icon" href="/favicon.ico" sizes="48x48">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <meta name="theme-color" content="#007A95">
+
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="es_MX" />
+    <meta property="og:site_name" content="FISM — Foro Internacional de Semiconductores y Metrología" />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={pageDescription} />
+    <meta property="og:url" content={canonicalBase} />
+    <meta property="og:image" content={canonicalBase + "img/og-image.jpg"} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={pageTitle} />
+    <meta name="twitter:description" content={pageDescription} />
+    <meta name="twitter:image" content={canonicalBase + "img/og-image.jpg"} />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+    <link rel="stylesheet" href="/css/fism.css" />
+</head>
+<body>
+    <header class="site-header">
+        <a class="nav-brand" href="#contenido" aria-label="FISM — Foro Internacional de Semiconductores y Metrología, ir al inicio">
+            <img class="nav-logo" src="/img/logo-fism.png" alt="FISM — Foro Internacional de Semiconductores y Metrología" width="266" height="100">
+        </a>
+        <nav class="nav-links">
+            <a href="#sobre">Sobre el foro</a>
+            <a href="#ponentes">Ponentes</a>
+            <a href="#programa">Programa</a>
+            <a href="#contacto">Contacto</a>
+            <a href="#eventos">Eventos</a>
+        </nav>
+        <div class="nav-actions">
+            <a href="https://forms.cloud.microsoft/r/XhjBhAyu1K" class="btn btn-primary btn-sm" target="_blank" rel="noopener noreferrer">Registro</a>
+            <button class="nav-toggle" type="button" aria-label="Abrir menú" aria-expanded="false">
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18"></path></svg>
+            </button>
+        </div>
+    </header>
+
+    <main id="contenido">
+        <slot />
+    </main>
+
+    <footer class="site-footer">
+        <div class="footer-inner">
+            <span class="footer-copy">© 2026 Centro Nacional de Metrología. Todos los derechos reservados.</span>
+            <div class="footer-social">
+                <a href="https://mx.linkedin.com/company/centro-nacional-de-metrolog-a" aria-label="LinkedIn"><svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M6.94 8.5H3.56V20h3.38V8.5ZM5.25 3a1.97 1.97 0 1 0 0 3.94A1.97 1.97 0 0 0 5.25 3ZM20.44 20h-3.37v-5.9c0-1.4-.03-3.2-1.95-3.2-1.96 0-2.26 1.53-2.26 3.1V20H9.5V8.5h3.24v1.57h.05c.45-.85 1.55-1.75 3.2-1.75 3.42 0 4.05 2.25 4.05 5.17V20Z"></path></svg></a>
+                <a href="https://x.com/CENAM_Mexico" aria-label="X"><svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor"><path d="M14.05 10.3 21.2 2h-1.7l-6.2 7.2L8.4 2H2.6l7.5 10.9L2.6 22h1.7l6.55-7.6L16.2 22h5.8l-7.95-11.7Zm-2.3 2.7-.76-1.1L4.8 3.3h2.6l4.87 6.97.76 1.1 6.33 9.06h-2.6l-5.01-7.43Z"></path></svg></a>
+            </div>
+        </div>
+    </footer>
+
+    <script is:inline src="/js/site.js"></script>
+</body>
+</html>

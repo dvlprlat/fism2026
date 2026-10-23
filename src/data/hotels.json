@@ -1,0 +1,17 @@
+{
+  "convenio": [
+    { "name": "City Express by Marriott Querétaro Jurica", "rateFrom": "Desde $1,195", "phone": "442 103 3900", "phoneHref": "+524421033900" },
+    { "name": "Staybridge Suites Querétaro", "rateFrom": "Desde $1,673", "phone": "442 103 2900", "phoneHref": "+524421032900" },
+    { "name": "Stadía Suites Querétaro Centro Histórico", "rateFrom": "Desde $1,315", "phone": "442 901 0100", "phoneHref": "+524429010100" },
+    { "name": "Fairfield Inn & Suites Querétaro Juriquilla", "rateFrom": "Desde $1,554", "phone": "442 500 9100", "phoneHref": "+524425009100" },
+    { "name": "Mirabel", "rateFrom": "Desde $1,150", "phone": "442 214 3535", "phoneHref": "+524422143535" }
+  ],
+  "otros": [
+    { "name": "Courtyard by Marriott Querétaro", "rateFrom": "Consultar tarifa", "phone": "442 483 0800", "phoneHref": "+524424830800" },
+    { "name": "Hotel NH Querétaro", "rateFrom": "Consultar tarifa", "phone": "442 238 4200", "phoneHref": "+524422384200" },
+    { "name": "Ramada Encore Querétaro", "rateFrom": "Desde $2,356.54", "phone": "442 690 9400", "phoneHref": "+524426909400" },
+    { "name": "Holiday Inn Querétaro–Centro Histórico by IHG", "rateFrom": "Consultar tarifa", "phone": "442 192 0202", "phoneHref": "+524421920202" },
+    { "name": "Holiday Inn Querétaro Zona Krystal", "rateFrom": "Desde $2,586", "phone": "442 238 9900", "phoneHref": "+524422389900" },
+    { "name": "Mirage", "rateFrom": "Consultar tarifa", "phone": "442 212 8010", "phoneHref": "+524422128010" }
+  ]
+}

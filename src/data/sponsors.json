@@ -1,0 +1,12 @@
+[
+  { "name": "Centro Nacional de Metrología", "logoFile": "cenam.jpg" },
+  { "name": "CIDESI", "logoFile": "cidesi.png" },
+  { "name": "Mitutoyo", "logoFile": "mitutoyo.png" },
+  { "name": "Dominion", "logoFile": "dominion.png" },
+  { "name": "Fluke", "logoFile": "fluke.png" },
+  { "name": "Simplemente MideBien", "logoFile": "midebien.png" },
+  { "name": "AcMax", "logoFile": "acmax.png" },
+  { "name": "Keysight", "logoFile": "keysight.png" },
+  { "name": "SmartSol Technologies", "logoFile": "smartsol.jpg" },
+  { "name": "Mettler Toledo", "logoFile": "mettler-toledo.png" }
+]

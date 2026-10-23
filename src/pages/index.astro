@@ -1,0 +1,628 @@
+---
+import Layout from '../layouts/Layout.astro';
+import AgendaItem from '../components/AgendaItem.astro';
+import type { AgendaSession, OtherEvent, VideoItem, Sponsor, Hotel } from '../types.ts';
+import { initials, displayName } from '../types.ts';
+import day1Data from '../data/day1.json';
+import day2Data from '../data/day2.json';
+import sponsorsData from '../data/sponsors.json';
+import hotelsData from '../data/hotels.json';
+import eventsData from '../data/events.json';
+import videosData from '../data/videos.json';
+
+const day1 = day1Data as AgendaSession[];
+const day2 = day2Data as AgendaSession[];
+const sponsors = sponsorsData as Sponsor[];
+const hotels = hotelsData as { convenio: Hotel[]; otros: Hotel[] };
+const videos = videosData as VideoItem[];
+const allEvents = eventsData as OtherEvent[];
+
+type Ponente = {
+  nombre: string;
+  meta: string | undefined;
+  charla: string;
+  foto: string | undefined;
+  logo: string | undefined;
+  iniciales: string;
+  day: number;
+  index: number;
+  time: string;
+};
+
+const ponentes: Ponente[] = [];
+function addPonentes(lista: AgendaSession[], dayNum: number) {
+  lista.forEach((s, i) => {
+    if (s.personName) {
+      const dashIdx = s.title.indexOf(' - ');
+      ponentes.push({
+        nombre: dashIdx > 0 ? s.title.substring(0, dashIdx) : s.title,
+        meta: s.meta,
+        charla: dashIdx > 0 ? s.title.substring(dashIdx + 3) : '',
+        foto: s.photoFile,
+        logo: s.companyLogoFile,
+        iniciales: initials(s.personName),
+        day: dayNum,
+        index: i,
+        time: s.time,
+      });
+    }
+    (s.participants ?? []).forEach(p => {
+      ponentes.push({
+        nombre: displayName(p),
+        meta: p.role,
+        charla: s.title,
+        foto: p.photoFile,
+        logo: p.companyLogoFile,
+        iniciales: initials(p.name),
+        day: dayNum,
+        index: i,
+        time: s.time,
+      });
+    });
+  });
+}
+addPonentes(day1, 1);
+addPonentes(day2, 2);
+
+const ponenteCount = String(ponentes.length).padStart(2, '0');
+
+const today = new Date();
+today.setHours(0, 0, 0, 0);
+const popupEvents = allEvents.filter(e => {
+  if (!e.popupUntil) return false;
+  return new Date(e.popupUntil) >= today;
+});
+---
+<Layout>
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Event",
+    "name": "Primer Foro Internacional de Semiconductores y Metrología (FISM 2026)",
+    "alternateName": "FISM 2026",
+    "url": "https://www.cenam.mx/fism/",
+    "startDate": "2026-11-03",
+    "endDate": "2026-11-04",
+    "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+    "eventStatus": "https://schema.org/EventScheduled",
+    "location": {
+        "@type": "Place",
+        "name": "BLOQUE",
+        "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "Querétaro",
+            "addressRegion": "Querétaro",
+            "addressCountry": "MX"
+        }
+    },
+    "image": ["https://www.cenam.mx/fism/img/og-image.jpg"],
+    "description": "Foro Internacional de Semiconductores y Metrología — 3 y 4 de noviembre de 2026 en BLOQUE, Querétaro. Organizado por CENAM y CIDESI.",
+    "organizer": [
+        { "@type": "Organization", "name": "Centro Nacional de Metrología (CENAM)", "url": "https://www.cenam.mx", "logo": "https://www.cenam.mx/fism/img/patrocinadores/cenam.jpg" },
+        { "@type": "Organization", "name": "Centro de Ingeniería y Desarrollo Industrial (CIDESI)", "url": "https://cidesi.com/", "logo": "https://www.cenam.mx/fism/img/patrocinadores/cidesi.png" }
+    ]
+}
+</script>
+
+<svg width="0" height="0" style="position:absolute">
+    <defs>
+        <pattern id="circuit-pattern" width="90" height="90" patternUnits="userSpaceOnUse">
+            <path d="M0 45h30M60 45h30M45 0v30M45 60v30" stroke="#DCE6EA" stroke-width="1.4"></path>
+            <circle cx="45" cy="45" r="3.5" fill="none" stroke="#DCE6EA" stroke-width="1.4"></circle>
+        </pattern>
+        <pattern id="dot-grid" width="26" height="26" patternUnits="userSpaceOnUse">
+            <circle cx="2" cy="2" r="1.2" fill="rgba(13,23,33,0.10)"></circle>
+        </pattern>
+    </defs>
+</svg>
+
+<!-- Hero -->
+<section id="home" class="hero-diag">
+    <div class="hero-diag-media">
+        <picture>
+            <source media="(max-width: 900px)" srcset="/img/hero-mobile.jpg" width="800" height="506">
+            <img src="/img/hero.jpg" width="1920" height="749" fetchpriority="high" alt="Acueducto de Querétaro y microchip de semiconductores">
+        </picture>
+        {videos.length > 0 && (
+            <button type="button" class="hero-video-btn" id="heroVideoBtn" aria-haspopup="dialog" aria-label="Ver video del foro" title="Ver video del foro">
+                <span class="hero-video-label" aria-hidden="true">
+                    <span class="hero-video-title">Ver video</span>
+                    <span class="hero-video-meta mono">Invitación</span>
+                </span>
+                <span class="hero-video-ring" aria-hidden="true"></span>
+                <span class="hero-video-ring is-delayed" aria-hidden="true"></span>
+                <span class="hero-video-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" width="30" height="30" fill="currentColor"><path d="M8 5.5v13l11-6.5-11-6.5Z"></path></svg>
+                </span>
+            </button>
+        )}
+    </div>
+
+    <div class="hero-diag-panel">
+        <div class="hero-kicker mono">Primer Foro Internacional</div>
+        <h1 class="disp hero-diag-title">Semiconductores y Metrología</h1>
+
+        <div class="hero-diag-divider"></div>
+
+        <p class="hero-diag-lead">Un espacio para impulsar el intercambio técnico y la colaboración entre gobierno, industria, academia e institutos de metrología buscando fortalecer la innovación, la soberanía tecnológica y la calidad en semiconductores.</p>
+
+        <div class="hero-diag-meta">
+            <div class="meta-item">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#6FE2F5" stroke-width="1.6"><path d="M12 22s7-7.58 7-12.5A7 7 0 0 0 5 9.5C5 14.42 12 22 12 22Z"></path><circle cx="12" cy="9.5" r="2.4"></circle></svg>
+                <span class="mono">Querétaro — Sede Bloque · CENAM · CIDESI</span>
+            </div>
+            <div class="meta-item">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#6FE2F5" stroke-width="1.6"><rect x="3.5" y="5" width="17" height="15.5" rx="2.2"></rect><path d="M3.5 9.5h17M8 3v4M16 3v4"></path></svg>
+                <span class="mono">3 y 4 de noviembre de 2026</span>
+            </div>
+        </div>
+        <div class="cta-row">
+            <a href="https://forms.cloud.microsoft/r/XhjBhAyu1K" class="btn btn-primary hero-diag-btn" target="_blank" rel="noopener noreferrer">
+                Registro
+                <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
+            </a>
+            <a href="/docs/poster-fism-2026.pdf" download="Poster-FISM-2026.pdf" id="poster-download-btn" class="btn btn-ghost-light">
+                <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="#F7FBFD" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11M7.5 11.5 12 16l4.5-4.5"></path><path d="M5 19.5h14"></path></svg>
+                Descargar póster
+            </a>
+        </div>
+        <div class="countdown mono hero-diag-countdown">
+            <div class="countdown-cell"><div id="cd-days" class="countdown-num is-primary">000</div><div class="countdown-label">DÍAS</div></div>
+            <div class="countdown-sep"></div>
+            <div class="countdown-cell"><div id="cd-hours" class="countdown-num">00</div><div class="countdown-label">HRS</div></div>
+            <div class="countdown-sep"></div>
+            <div class="countdown-cell"><div id="cd-min" class="countdown-num">00</div><div class="countdown-label">MIN</div></div>
+            <div class="countdown-sep"></div>
+            <div class="countdown-cell"><div id="cd-sec" class="countdown-num">00</div><div class="countdown-label">SEG</div></div>
+        </div>
+    </div>
+</section>
+
+<div class="seam"></div>
+
+<!-- Patrocinadores -->
+<section id="patrocinadores" class="sponsor-strip">
+    <div class="container" style="text-align:center;">
+        <div class="eyebrow-section mono">FORO INTERNACIONAL SEMICONDUCTORES Y METROLOGÍA · PATROCINADORES</div>
+        <div class="eyebrow-section mono"></div>
+    </div>
+    <div class="sponsor-marquee">
+        <div class="sponsor-marquee-track">
+            {sponsors.map(s => (
+                <img class="sponsor-strip-logo" src={`/img/patrocinadores/${s.logoFile}`} alt={`Logotipo ${s.name}`} />
+            ))}
+            {sponsors.map(s => (
+                <img class="sponsor-strip-logo" src={`/img/patrocinadores/${s.logoFile}`} alt="" aria-hidden="true" />
+            ))}
+        </div>
+    </div>
+</section>
+
+<!-- Sobre el foro -->
+<section id="sobre" class="sf" aria-labelledby="sf-titulo">
+    <div class="sf-track">
+        <div class="sf-stage">
+            <div class="sf-bg" aria-hidden="true"><img src="/img/mision-vision-bg.jpg" alt="" loading="lazy"></div>
+            <div class="sf-grid" aria-hidden="true"></div>
+
+            <div class="sf-ruler" aria-hidden="true">
+                <div class="sf-ruler-body">
+                    <div class="sf-ruler-ticks"></div>
+                    <div class="sf-ruler-fill"></div>
+                    <ol class="sf-ruler-marks">
+                        <li style="top:10%">EL FORO</li>
+                        <li style="top:30%">MISIÓN</li>
+                        <li style="top:50%">VISIÓN</li>
+                        <li style="top:70%">OBJETIVOS</li>
+                        <li style="top:90%">CIFRAS</li>
+                    </ol>
+                </div>
+            </div>
+
+            <div class="sf-panels">
+                <article class="sf-panel is-active">
+                    <div class="sf-eyebrow mono" id="sf-titulo">SOBRE EL FORO</div>
+                    <p class="sf-hook disp" data-sf-words>Ciencia, <span class="sf-k">industria</span> y <span class="sf-k">soberanía tecnológica</span> en un mismo espacio.</p>
+                    <p class="sf-lead">El Foro Internacional de Semiconductores y Metrología (FISM) reúne a gobierno, institutos nacionales de metrología, industria, academia y centros de investigación para impulsar el intercambio técnico y la colaboración en torno a las tecnologías habilitadoras que sostienen la industria de semiconductores.</p>
+                </article>
+
+                <article class="sf-panel">
+                    <span class="sf-ghost disp" aria-hidden="true">Misión</span>
+                    <div class="sf-eyebrow mono">MISIÓN</div>
+                    <h2 class="sf-title disp">Colaboración técnica con propósito</h2>
+                    <p class="sf-body">Impulsar el intercambio técnico y la colaboración entre gobierno, institutos nacionales de metrología, industria, academia y centros de investigación en semiconductores y metrología, para fortalecer la innovación, la soberanía y la calidad en tecnologías habilitadoras.</p>
+                </article>
+
+                <article class="sf-panel">
+                    <span class="sf-ghost disp" aria-hidden="true">Visión</span>
+                    <div class="sf-eyebrow mono">VISIÓN</div>
+                    <h2 class="sf-title disp">El foro de referencia regional</h2>
+                    <p class="sf-quote disp">Ser el foro internacional líder en <em>tendencias, proyectos, estándares y alianzas</em> en semiconductores y metrología.</p>
+                </article>
+
+                <article class="sf-panel">
+                    <div class="sf-eyebrow mono">OBJETIVOS</div>
+                    <h2 class="sf-title disp">Tres ejes de trabajo</h2>
+                    <ul class="sf-axes">
+                        <li class="sf-axis">
+                            <span class="sf-axis-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3h4M10 3v6.2L4.8 18a2 2 0 0 0 1.7 3h11a2 2 0 0 0 1.7-3L14 9.2V3"></path><path d="M8 15h8"></path></svg></span>
+                            <div><h3 class="disp">Avances científicos y tecnológicos</h3><p>Presentar y discutir los desarrollos más recientes en semiconductores y metrología.</p></div>
+                        </li>
+                        <li class="sf-axis">
+                            <span class="sf-axis-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="8"></circle><circle cx="12" cy="12" r="3.2"></circle><path d="M12 2v3M12 19v3M2 12h3M19 12h3"></path></svg></span>
+                            <div><h3 class="disp">Estandarización y trazabilidad</h3><p>Impulsar la estandarización, la trazabilidad y la evaluación del desempeño metrológico.</p></div>
+                        </li>
+                        <li class="sf-axis">
+                            <span class="sf-axis-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="7" width="10" height="10" rx="1.4"></rect><rect x="10" y="10" width="4" height="4"></rect><path d="M9 3v2M12 3v2M15 3v2M9 19v2M12 19v2M15 19v2M3 9h2M3 12h2M3 15h2M19 9h2M19 12h2M19 15h2"></path></svg></span>
+                            <div><h3 class="disp">Capacidades nacionales</h3><p>Fortalecer las capacidades en diseño, manufactura y aseguramiento metrológico.</p></div>
+                        </li>
+                    </ul>
+                </article>
+
+                <article class="sf-panel">
+                    <div class="sf-eyebrow mono">EL FORO EN CIFRAS</div>
+                    <h2 class="sf-title disp">Dos días para conectar ciencia e industria</h2>
+                    <div class="sf-stats">
+                        <div class="sf-stat"><div class="sf-stat-num disp" data-count="2">2</div><div class="sf-stat-label mono">Días</div></div>
+                        <div class="sf-stat"><div class="sf-stat-num disp" data-count="12">12</div><div class="sf-stat-label mono">Ponencias</div></div>
+                        <div class="sf-stat"><div class="sf-stat-num disp" data-count="3">3</div><div class="sf-stat-label mono">Paneles</div></div>
+                        <div class="sf-stat"><div class="sf-stat-num disp" data-count="2">2</div><div class="sf-stat-label mono">Visitas a laboratorios</div></div>
+                    </div>
+                    <p class="sf-note"><b class="mono">NIST · EUA</b> Con ponentes del Instituto Nacional de Estándares y Tecnología de Estados Unidos.</p>
+                    <a class="btn sf-cta" href="#programa">Ver el programa</a>
+                </article>
+            </div>
+
+            <a class="sf-skip mono" href="#programa">Saltar al programa</a>
+        </div>
+    </div>
+</section>
+
+<!-- Ponentes -->
+{ponentes.length > 0 && (
+    <section id="ponentes" class="pn" aria-labelledby="pn-titulo">
+        <div class="pn-track">
+            <div class="pn-stage">
+                <div class="pn-head">
+                    <div class="eyebrow-section mono">PONENTES</div>
+                    <h2 class="disp section-title" id="pn-titulo">Quienes compartirán su experiencia</h2>
+                    <p class="pn-lead">Especialistas de gobierno, industria, academia e institutos de metrología de México y Estados Unidos.</p>
+                </div>
+                <div class="pn-rail" aria-hidden="true"></div>
+                <ol class="pn-list">
+                    {ponentes.map(p => {
+                        const fotoClase = p.foto ? '' : p.logo ? ' is-logo' : ' is-initials';
+                        return (
+                            <li class="pn-item">
+                                <button type="button" class="pn-card" data-target={`agenda-${p.day}-${p.index}`} aria-label={`${p.nombre}: ver en el programa`}>
+                                    <span class={`pn-photo${fotoClase}`}>
+                                        {p.foto
+                                            ? <img src={`/img/ponentes/${p.foto}`} alt="" loading="lazy" />
+                                            : p.logo
+                                                ? <img src={`/img/empresas/${p.logo}`} alt="" loading="lazy" />
+                                                : <span class="pn-initials">{p.iniciales}</span>
+                                        }
+                                    </span>
+                                    <span class="pn-text">
+                                        <span class="pn-name disp">{p.nombre}</span>
+                                        {p.meta && <span class="pn-meta">{p.meta}</span>}
+                                        {p.charla && <span class="pn-talk">{p.charla}</span>}
+                                        <span class="pn-when mono">DÍA {p.day} · {p.time}</span>
+                                    </span>
+                                </button>
+                            </li>
+                        );
+                    })}
+                </ol>
+                <div class="pn-controls">
+                    <span class="pn-count mono" aria-hidden="true"><span class="pn-count-now">01</span> / {ponenteCount}</span>
+                    <button type="button" class="pn-btn" data-pn="prev" aria-label="Ponente anterior"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"></path></svg></button>
+                    <button type="button" class="pn-btn" data-pn="pause" aria-label="Pausar carrusel" aria-pressed="false"><svg class="i-pause" viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><rect x="6" y="5" width="4" height="14" rx="1"></rect><rect x="14" y="5" width="4" height="14" rx="1"></rect></svg><svg class="i-play" viewBox="0 0 24 24" width="16" height="16" fill="currentColor" hidden><path d="M8 5.5v13l11-6.5-11-6.5Z"></path></svg></button>
+                    <button type="button" class="pn-btn" data-pn="next" aria-label="Siguiente ponente"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"></path></svg></button>
+                </div>
+            </div>
+        </div>
+    </section>
+)}
+
+<!-- Programa -->
+<section id="programa" class="section section-deep">
+    <div class="section-blob blob-amber" style="bottom:-140px; left:-140px; width:460px; height:460px;"></div>
+    <div class="container" style="position:relative;">
+        <div class="section-header">
+            <div>
+                <div class="eyebrow-section mono">PROGRAMA</div>
+                <h2 class="disp section-title">Dos días de conferencias, paneles y networking técnico</h2>
+            </div>
+            <div class="section-note mono">Horario preliminar — sujeto a confirmación</div>
+        </div>
+
+        <div class="agenda-toolbar">
+            <div class="programa-tabs" role="group" aria-label="Día del programa">
+                <button class="day-tab is-active" type="button" data-day="1" aria-pressed="true">DÍA 1 · 3 NOV</button>
+                <button class="day-tab" type="button" data-day="2" aria-pressed="false">DÍA 2 · 4 NOV</button>
+            </div>
+            <div class="agenda-filters" role="group" aria-label="Filtrar por tipo de sesión">
+                <button class="agenda-filter is-active" type="button" data-filter="todo" aria-pressed="true">Todo</button>
+                <button class="agenda-filter" type="button" data-filter="ponencia" aria-pressed="false">Ponencias</button>
+                <button class="agenda-filter" type="button" data-filter="panel" aria-pressed="false">Paneles</button>
+                <button class="agenda-filter" type="button" data-filter="visita" aria-pressed="false">Visitas</button>
+            </div>
+        </div>
+
+        <div class="agenda-layout">
+            <div class="agenda-list">
+                <ol class="agenda-day is-active" data-dayset="1">
+                    {day1.map((item, i) => <AgendaItem item={item} day={1} index={i} />)}
+                </ol>
+                <ol class="agenda-day" data-dayset="2">
+                    {day2.map((item, i) => <AgendaItem item={item} day={2} index={i} />)}
+                </ol>
+                <p class="agenda-empty" hidden>No hay sesiones de este tipo en este día.</p>
+            </div>
+
+            <aside class="agenda-focus" aria-live="polite" aria-label="Detalle de la sesión">
+                <div class="agenda-focus-inner" id="agendaFocus"></div>
+                <div class="agenda-focus-nav">
+                    <button type="button" class="agenda-nav-btn" id="agendaPrev" aria-label="Sesión anterior">Anterior</button>
+                    <span class="agenda-count mono" id="agendaCount"></span>
+                    <button type="button" class="agenda-nav-btn is-primary" id="agendaNext" aria-label="Sesión siguiente">Siguiente</button>
+                </div>
+            </aside>
+        </div>
+
+        <div class="section-cta">
+            <a href="/docs/programa-fism-2026.pdf" download="Programa-FISM-2026.pdf" class="btn btn-outline">
+                <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="var(--text)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11M7.5 11.5 12 16l4.5-4.5"></path><path d="M5 19.5h14"></path></svg>
+                Descargar el programa (PDF)
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- Modal semblanza ponente -->
+<div class="ponente-modal" id="ponenteModal" aria-hidden="true" inert>
+    <div class="ponente-modal-backdrop" data-modal-close></div>
+    <div class="ponente-modal-dialog" role="dialog" aria-modal="true" aria-labelledby="ponenteModalName">
+        <button type="button" class="ponente-modal-close" data-modal-close aria-label="Cerrar">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6l12 12M18 6 6 18"></path></svg>
+        </button>
+        <div class="ponente-modal-photo">
+            <img id="ponenteModalPhoto" src="" alt="">
+        </div>
+        <div class="ponente-modal-body">
+            <div class="ponente-modal-top">
+                <div class="ponente-modal-eyebrow mono" id="ponenteModalMeta"></div>
+                <img class="ponente-modal-logo" id="ponenteModalLogo" src="" alt="" hidden>
+            </div>
+            <h3 class="disp ponente-modal-name" id="ponenteModalName"></h3>
+            <div class="ponente-modal-bio" id="ponenteModalBio"></div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal video -->
+{videos.length > 0 && (
+    <div class="video-modal" id="videoModal" aria-hidden="true" inert>
+        <div class="video-modal-backdrop" data-video-close></div>
+        <div class="video-modal-dialog" role="dialog" aria-modal="true" aria-labelledby="videoModalTitle">
+            <button type="button" class="video-modal-close" data-video-close aria-label="Cerrar video">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"></path></svg>
+            </button>
+            <div class="video-modal-player">
+                <video id="videoModalPlayer" controls playsinline preload="none"></video>
+            </div>
+            <h3 class="disp video-modal-title" id="videoModalTitle"></h3>
+            {videos.length > 1
+                ? (
+                    <div class="video-modal-list">
+                        {videos.map(video => (
+                            <button type="button" class="video-thumb"
+                                    data-src={`/videos/${video.file}`}
+                                    data-poster={video.posterFile ? `/videos/${video.posterFile}` : ''}
+                                    data-captions={video.captionsFile ? `/videos/${video.captionsFile}` : ''}
+                                    data-title={video.title}>
+                                {video.posterFile && <img src={`/videos/${video.posterFile}`} alt="" loading="lazy" />}
+                                <span>{video.title}</span>
+                            </button>
+                        ))}
+                    </div>
+                )
+                : (
+                    <div class="video-thumb" hidden
+                         data-src={`/videos/${videos[0].file}`}
+                         data-poster={videos[0].posterFile ? `/videos/${videos[0].posterFile}` : ''}
+                         data-captions={videos[0].captionsFile ? `/videos/${videos[0].captionsFile}` : ''}
+                         data-title={videos[0].title}></div>
+                )
+            }
+        </div>
+    </div>
+)}
+
+<!-- Contacto -->
+<section id="contacto" class="section section-alt">
+    <svg style="position:absolute; inset:0; width:100%; height:100%; opacity:0.6; pointer-events:none;" viewBox="0 0 1200 600" preserveAspectRatio="none">
+        <rect width="1200" height="600" fill="url(#dot-grid)"></rect>
+    </svg>
+    <div class="container" style="position:relative;">
+        <div class="eyebrow-section mono">CONTACTO</div>
+        <h2 class="disp section-title">Encuéntranos en </h2>
+
+        <div class="contact-grid">
+            <div class="contact-card tick-marks">
+                <div>
+                    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="var(--accent)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5.5" width="18" height="13" rx="2"></rect><path d="m4 7 8 6 8-6"></path></svg>
+                    <div class="contact-block-label mono">CORREO</div>
+                    <a class="contact-value" href="mailto:fism2026@cenam.mx">fism2026@cenam.mx</a>
+                </div>
+                <div>
+                    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="var(--accent-amber)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 4.5c1.2-1 2.7-1.6 3.4-.4l1.3 2.2c.5.8.3 1.9-.5 2.6l-.9.8c-.5.5-.6 1.3-.2 1.9 1 1.6 2.6 3.2 4.2 4.2.6.4 1.4.3 1.9-.2l.8-.9c.7-.8 1.8-1 2.6-.5l2.2 1.3c1.2.7.6 2.2-.4 3.4-1 1.1-2.6 1.6-4 1.2-3.1-.9-6.2-3-8.6-5.4S3 9.6 2.1 6.5c-.4-1.4.1-3 1.2-4Z"></path></svg>
+                    <div class="contact-block-label mono">TELÉFONO</div>
+                    <a class="contact-value" href="tel:+524422110500">(442) 211-05-00 ext. 3023</a>
+                </div>
+            </div>
+
+            <a class="venue-card tick-marks" href="https://www.google.com/maps/search/?api=1&query=El+Bloque+Quer%C3%A9taro" target="_blank" rel="noopener noreferrer" aria-label="Ver la ubicación de BLOQUE, Querétaro, en el mapa">
+                <img src="/img/bloque.jpg" srcset="/img/bloque-800.jpg 800w, /img/bloque.jpg 1400w" sizes="(max-width: 900px) 100vw, 700px" alt="Edificio BLOQUE, sede del FISM en Querétaro" loading="lazy">
+                <div class="venue-overlay"></div>
+                <div class="venue-content">
+                    <div class="venue-eyebrow mono">SEDE</div>
+                    <div class="venue-title">BLOQUE — Querétaro</div>
+                    <p class="venue-copy">Centro de innovación donde se realizará el foro.</p>
+                    <span class="venue-map mono">Ver en el mapa</span>
+                </div>
+            </a>
+        </div>
+
+        <div class="hoteles-block">
+            <div class="hoteles-eyebrow">
+                <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18v-7a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v2"></path><path d="M14 13v-2a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v7"></path><path d="M3 18h18"></path><path d="M3 21v-3M21 21v-3"></path></svg>
+                HOSPEDAJE SUGERIDO
+            </div>
+            <p class="hoteles-copy">Estas son algunas opciones de hospedaje cercanas a la sede. * Tarifas de referencia</p>
+
+            <details class="hoteles-group" open>
+                <summary class="hoteles-summary">
+                    <span>Hoteles con tarifa preferencial</span>
+                </summary>
+                <div class="hoteles-table-wrap">
+                    <table class="hoteles-table">
+                        <thead>
+                            <tr><th>Hotel</th><th>Tarifa</th><th>Contacto</th></tr>
+                        </thead>
+                        <tbody>
+                            {hotels.convenio.map(hotel => (
+                                <tr>
+                                    <td>{hotel.name}</td>
+                                    <td>{hotel.rateFrom}</td>
+                                    <td><a href={`tel:${hotel.phoneHref}`}>{hotel.phone}</a></td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
+            </details>
+
+            <details class="hoteles-group">
+                <summary class="hoteles-summary">
+                    <span>Otros hoteles cercanos, sin convenio</span>
+                </summary>
+                <div class="hoteles-table-wrap">
+                    <table class="hoteles-table">
+                        <thead>
+                            <tr><th>Hotel</th><th>Tarifa</th><th>Contacto</th></tr>
+                        </thead>
+                        <tbody>
+                            {hotels.otros.map(hotel => (
+                                <tr>
+                                    <td>{hotel.name}</td>
+                                    <td>{hotel.rateFrom}</td>
+                                    <td><a href={`tel:${hotel.phoneHref}`}>{hotel.phone}</a></td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
+            </details>
+        </div>
+    </div>
+</section>
+
+<!-- Popup eventos próximos CENAM -->
+{popupEvents.length > 0 && (
+    <>
+        <button type="button" class="ev-drop" id="evDrop" aria-haspopup="dialog" aria-controls="evPopup" aria-label="Ver próximos eventos del CENAM" hidden>
+            <span class="ev-drop-liquid" aria-hidden="true">
+                <span class="ev-drop-base"></span>
+                <span class="ev-drop-blob"></span>
+            </span>
+            <span class="ev-drop-icon-wrap" aria-hidden="true">
+                <svg class="ev-drop-icon" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M9.2 9.2a2.9 2.9 0 1 1 4.3 2.5c-.9.5-1.5 1.2-1.5 2.2v.6"></path><circle cx="12" cy="18" r="0.6" fill="currentColor"></circle></svg>
+            </span>
+            <svg class="ev-drop-filter" width="0" height="0" aria-hidden="true" focusable="false">
+                <filter id="evDropGoo"><feGaussianBlur in="SourceGraphic" stdDeviation="4.5"></feGaussianBlur><feColorMatrix values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 22 -9"></feColorMatrix></filter>
+            </svg>
+        </button>
+        <div class="ev-popup" id="evPopup" aria-hidden="true" inert>
+            <div class="ev-popup-backdrop" data-evpop-close></div>
+            <div class="ev-popup-dialog" role="dialog" aria-modal="true" aria-labelledby="evPopupTitle">
+                <button type="button" class="ev-popup-close" data-evpop-close aria-label="Cerrar">
+                    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"></path></svg>
+                </button>
+                <div class="ev-popup-head">
+                    <div class="ev-popup-eyebrow mono">PRÓXIMOS EVENTOS DEL CENAM</div>
+                    <h2 class="ev-popup-title disp" id="evPopupTitle">También te puede interesar</h2>
+                </div>
+                <div class="ev-popup-list" aria-live="polite">
+                    {popupEvents.map(ev => (
+                        <a class="ev-popup-item" href={ev.url ?? '#eventos'} target={ev.url ? '_blank' : undefined} rel="noopener" data-evpop-go>
+                            <span class="ev-popup-media">
+                                {ev.imageFile && <img src={`/img/eventos/${ev.imageFile}`} alt="" loading="lazy" />}
+                                <span class="ev-popup-date mono">{ev.dateLabel}</span>
+                            </span>
+                            <span class="ev-popup-body">
+                                <span class="ev-popup-name disp">{ev.name}</span>
+                                <span class="ev-popup-copy">{ev.description}</span>
+                                <span class="ev-popup-more">Ver más</span>
+                            </span>
+                        </a>
+                    ))}
+                </div>
+                <div class="ev-popup-dots" aria-hidden="true"></div>
+            </div>
+        </div>
+    </>
+)}
+
+<!-- Otros eventos CENAM -->
+{allEvents.length > 0 && (
+    <section id="eventos" class="section eventos-section">
+        <div class="container" style="position:relative;">
+            <div class="section-header">
+                <div>
+                    <div class="eyebrow-section mono">MÁS EVENTOS DEL CENAM</div>
+                    <h2 class="disp section-title">Otros eventos que te pueden interesar</h2>
+                </div>
+                <p class="eventos-lead">Foros, reuniones técnicas y jornadas organizadas por el Centro Nacional de Metrología.</p>
+            </div>
+
+            <div class="eventos-grid">
+                {allEvents.map(ev => ev.url
+                    ? (
+                        <a class="evento-card" href={ev.url} target="_blank" rel="noopener">
+                            <div class="evento-card-media">
+                                {ev.imageFile
+                                    ? <img src={`/img/eventos/${ev.imageFile}`} alt="" loading="lazy" />
+                                    : <svg class="evento-card-icon" viewBox="0 0 24 24" width="44" height="44" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="2.2"></rect><path d="M3.5 9.5h17M8 3v4M16 3v4"></path></svg>
+                                }
+                                <span class="evento-card-date mono">{ev.dateLabel}</span>
+                            </div>
+                            <div class="evento-card-body">
+                                <div class="evento-card-title disp">{ev.name}</div>
+                                <p class="evento-card-copy">{ev.description}</p>
+                                <span class="evento-card-link">Ver más</span>
+                            </div>
+                        </a>
+                    )
+                    : (
+                        <div class="evento-card is-static">
+                            <div class="evento-card-media">
+                                {ev.imageFile
+                                    ? <img src={`/img/eventos/${ev.imageFile}`} alt="" loading="lazy" />
+                                    : <svg class="evento-card-icon" viewBox="0 0 24 24" width="44" height="44" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="2.2"></rect><path d="M3.5 9.5h17M8 3v4M16 3v4"></path></svg>
+                                }
+                                <span class="evento-card-date mono">{ev.dateLabel}</span>
+                            </div>
+                            <div class="evento-card-body">
+                                <div class="evento-card-title disp">{ev.name}</div>
+                                <p class="evento-card-copy">{ev.description}</p>
+                            </div>
+                        </div>
+                    )
+                )}
+            </div>
+        </div>
+    </section>
+)}
+</Layout>

@@ -1,0 +1,90 @@
+---
+import type { AgendaSession } from '../types.ts';
+import { initials, displayName, badgeClass, categoryIcon } from '../types.ts';
+
+interface Props {
+  item: AgendaSession;
+  day: number;
+  index: number;
+}
+
+const { item, day, index } = Astro.props;
+const detailId = `agenda-${day}-${index}`;
+const catKey = badgeClass(item.category).replace('badge-', '');
+const isPerson = !!item.personName;
+const initStr = initials(item.personName);
+const thumb = isPerson && item.photoFile
+  ? `/img/ponentes/${item.photoFile}`
+  : isPerson && item.companyLogoFile
+    ? `/img/empresas/${item.companyLogoFile}`
+    : null;
+const dayLabel = day === 1 ? 'DÍA 1 · 3 NOV' : 'DÍA 2 · 4 NOV';
+const detailPhotoClass = `agenda-detail-photo${!item.photoFile && item.companyLogoFile ? ' is-logo' : ''}`;
+---
+<li class="agenda-item" data-cat={catKey}>
+  <button type="button" class="agenda-row" aria-expanded="false" aria-controls={detailId}>
+    <span class="agenda-time mono">{item.time}</span>
+    <span class="agenda-dot" aria-hidden="true"></span>
+    <span class="agenda-text">
+      <span class="agenda-title">{item.title}</span>
+      <span class="agenda-meta">{item.category}{item.meta ? ` · ${item.meta}` : ''}</span>
+    </span>
+    {thumb && (
+      <img class={`agenda-thumb${!item.photoFile ? ' is-logo' : ''}`} src={thumb} alt="" loading="lazy" />
+    )}
+  </button>
+  <div class="agenda-detail" id={detailId}>
+    <div class={detailPhotoClass}>
+      {item.photoFile
+        ? <img class="agenda-detail-img" src={`/img/ponentes/${item.photoFile}`} alt={item.personName ?? ''} loading="lazy" />
+        : item.companyLogoFile
+          ? <img class="agenda-detail-img" src={`/img/empresas/${item.companyLogoFile}`} alt={item.meta ?? ''} loading="lazy" />
+          : initStr
+            ? <div class="agenda-detail-fallback">{initStr}</div>
+            : <div class="agenda-detail-fallback is-icon"><Fragment set:html={categoryIcon(item.category)} /></div>
+      }
+      <span class="agenda-detail-when mono">{dayLabel} · {item.time}</span>
+    </div>
+    <div class="agenda-detail-body">
+      <span class={`programa-card-badge ${badgeClass(item.category)}`}>{item.category}</span>
+      <div class="agenda-detail-title disp">{item.title}</div>
+      {item.meta && <div class="agenda-detail-meta">{item.meta}</div>}
+      {(item.participants ?? []).length > 0 && (
+        <ul class="agenda-people">
+          {(item.participants ?? []).map(persona => {
+            const pName = displayName(persona);
+            const pInitials = initials(persona.name);
+            return (
+              <li class="agenda-person">
+                <span class={`agenda-person-photo${!persona.photoFile && persona.companyLogoFile ? ' is-logo' : ''}`}>
+                  {persona.photoFile
+                    ? <img src={`/img/ponentes/${persona.photoFile}`} alt="" loading="lazy" />
+                    : persona.companyLogoFile
+                      ? <img src={`/img/empresas/${persona.companyLogoFile}`} alt="" loading="lazy" />
+                      : <span class="agenda-person-initials">{pInitials}</span>
+                  }
+                </span>
+                <span class="agenda-person-text">
+                  <span class="agenda-person-name">{pName}</span>
+                  {persona.role && <span class="agenda-person-role">{persona.role}</span>}
+                </span>
+              </li>
+            );
+          })}
+        </ul>
+      )}
+      {item.pending && <div class="programa-card-pending">Ponente por confirmar</div>}
+      {(item.bioParagraphs ?? []).length > 0 && (
+        <>
+          <p class="agenda-detail-bio">{item.bioParagraphs![0]}</p>
+          <button type="button" class="programa-card-bio-btn" aria-label={`Ver semblanza completa de ${item.personName}`}>Semblanza</button>
+          <div class="ponente-bio-source" data-logo={item.companyLogoFile ? `/img/empresas/${item.companyLogoFile}` : ''} hidden>
+            <div class="bio-name">{item.personName}</div>
+            <div class="bio-meta">{item.meta}</div>
+            {(item.bioParagraphs ?? []).map(p => <p>{p}</p>)}
+          </div>
+        </>
+      )}
+    </div>
+  </div>
+</li>

@@ -1,0 +1,116 @@
+[
+  {
+    "time": "08:30 – 08:45",
+    "category": "Institucional",
+    "title": "Inauguración",
+    "meta": "Mtro. Arquímedes Ruiz (Director General del CENAM y Presidente del SIM) · Dr. Carlos Rubio · Mtro. Diego Flores · Dr. Mathieu Hautefeuille · Mtro. Rodrigo Ruiz Ballesteros",
+    "photoFile": "inauguracion.jpg",
+    "participants": [
+      { "honorific": "Mtro.", "name": "Arquímedes Ruiz", "role": "Director General del CENAM y Presidente del Sistema Interamericano de Metrología (SIM)", "photoFile": "arquimedes-ruiz.jpg" },
+      { "honorific": "Dr.", "name": "Carlos Rubio", "role": "Director General de CIDESI", "photoFile": "carlos-rubio.jpg" },
+      { "honorific": "Dr.", "name": "Mathieu Hautefeuille", "photoFile": "mathieu-hautefeuille.jpg" },
+      { "honorific": "Mtro.", "name": "Rodrigo Ruiz Ballesteros", "role": "Secretario de Innovación y Tecnología del Municipio de Querétaro", "photoFile": "rodrigo-ruiz-ballesteros.jpg" }
+    ]
+  },
+  {
+    "time": "08:45 – 09:00",
+    "category": "Ponencia",
+    "title": "Mtro. Diego Flores",
+    "meta": "Titular de Industria Electrónica y Semiconductores",
+    "personName": "Diego Flores",
+    "photoFile": "diego-flores.jpg"
+  },
+  {
+    "time": "09:00 – 09:30",
+    "category": "Ponencia",
+    "title": "Ing. Carlos Cruz",
+    "meta": "MICROSS Components",
+    "personName": "Carlos Cruz",
+    "photoFile": "carlos-cruz.jpg",
+    "companyLogoFile": "micross.jpg",
+    "bioParagraphs": [
+      "Carlos Cruz es Ingeniero en Sistemas Computacionales por la Universidad Autónoma de Tamaulipas, donde se graduó con excelencia académica. Profesionista con más de 30 años de experiencia en la industria de microelectrónica, automotriz y semiconductores. Actualmente se desempeña como Process Engineering Manager en Micross Components, tras una destacada trayectoria de más de 13 años liderando equipos e iniciativas de ingeniería de procesos en Semtech.",
+      "Con más de 20 años de experiencia técnica y de liderazgo en la industria de semiconductores, microelectrónica y diodos de alta confiabilidad, es especialista en procesos de ensamblaje, prueba y calificación de diodos semiconductores. Cuenta con un sólido dominio de estándares militares e industriales estrictos como MIL-PRF-19500, MIL-STD-750 y AS9100/ISO 9001, así como certificación Green Belt en Six Sigma e IPC-A-610.",
+      "Su formación y contribución al sector se complementan con su participación activa en iniciativas académicas y de especialización nacional, habiendo participado recientemente como ponente en el taller de ATP (Assembly, Test & Packaging) de semiconductores durante el Semiconductor Summer School Mexico 2026 en la Sección de Electrónica y Estado Sólido del Cinvestav y el Centro de Nanociencias Micro y Nanotecnologías del IPN y contar con la certificación en la Cadena de Valor de los Semiconductores por el Tecnológico de Monterrey. Su perfil combina una visión estratégica de optimización de procesos con una firme orientación al desarrollo de talento y la innovación tecnológica."
+    ]
+  },
+  {
+    "time": "09:30 – 10:00",
+    "category": "Ponencia",
+    "title": "Dra. Fang-Hsin Lin",
+    "meta": "Subdirectora de la División de Instrumentación y Metrología de Semiconductores · Industrial Technology Research Institute (ITRI), Taiwán",
+    "personName": "Fang-Hsin Lin",
+    "photoFile": "fang-hsin-lin.jpg",
+    "bioParagraphs": [
+      "La Dra. Fang-Hsin Lin se incorporó en 2015 al Centro de Patrones de Medición (CMS) del Instituto de Investigación en Tecnología Industrial (ITRI) como metróloga y actualmente es Subdirectora de la División de Instrumentación y Metrología de Semiconductores del CMS/ITRI. Ha contribuido al desarrollo de técnicas e instrumentación de nanometrología y metrología química, y ha participado activamente en actividades internacionales dentro del APMP TCMM y VAMAS. Su investigación se centra principalmente en el análisis de partículas e impurezas en niveles ultratraza en materias primas para la industria de semiconductores.",
+      "La Dra. Lin obtuvo su doctorado en Ingeniería Biomédica y Ciencias Ambientales en la Universidad Nacional Tsing Hua en 2012."
+    ]
+  },
+  {
+    "time": "10:00 – 10:30",
+    "category": "Ponencia",
+    "title": "Mtro. Carlos Meneses",
+    "meta": "FUMEC",
+    "personName": "Carlos Meneses",
+    "photoFile": "carlos-meneses.jpg",
+    "companyLogoFile": "fumec.jpg",
+    "bioParagraphs": [
+      "Coordinador de Proyectos de Electrónica Avanzada, Automotriz y Semiconductores en la Fundación México–Estados Unidos para la Ciencia (FUMEC). \n\nHa liderado iniciativas para impulsar la inserción de empresas PYME en la cadena de valor automotriz y fortalecer sus capacidades tecnológicas y de innovación; así como promover el desarrollo de ecosistemas sectoriales regionales.\n",
+      "Ha participado en estudios estratégicos sobre la transición de la cadena de valor automotriz mexicana hacia los vehículos eléctricos, así como en el Mapa de ruta de la industria de semiconductores en México y la elaboración de Agendas estatales de Innovación.\nHa sido investigador del Instituto de Investigaciones Eléctricas y el Centro de Desarrollo Tecnológico de Grupo CARSO;  gerente de desarrollo de nuevos productos en empresas de Grupo ICA y  Grupo CARSO y profesor de licenciatura en la Universidad Autónoma de Morelos y la Universidad La Salle. ",
+      "Es ingeniero en Electrónica por la Universidad Autónoma Metropolitana y cuenta con más de 25 años de experiencia en el desarrollo de productos basados en sistemas embebidos."
+    ]
+  },
+  {
+    "time": "10:30 – 11:00",
+    "category": "Receso",
+    "title": "Networking, demos y coffee"
+  },
+  {
+    "time": "11:00 – 11:30",
+    "category": "Ponencia",
+    "title": "Dr. Stephan Schlamminger - Kibble Balance and MEMS",
+    "meta": "NIST, Estados Unidos",
+    "personName": "Stephan Schlamminger",
+    "photoFile": "stephan-schlamminger.jpg"
+  },
+  {
+    "time": "11:30 – 12:30",
+    "category": "Panel",
+    "title": "Mtro. Edgar Bañuelos",
+    "meta": "Panel 1 · CANAME + SIEMENS, CONDUMEX, SCHNEIDER",
+    "personName": "Edgar Bañuelos",
+    "photoFile": "edgar-banuelos.jpg",
+    "companyLogoFile": "caname.png"
+  },
+  {
+    "time": "12:30 – 13:00",
+    "category": "Ponencia",
+    "title": "Ing. Héctor Marín",
+    "meta": "Senior Director, Government Affairs · Qualcomm International, Inc.",
+    "personName": "Héctor Marín",
+    "photoFile": "hector-marin.jpg"
+  },
+  {
+    "time": "13:00 – 14:00",
+    "category": "Panel",
+    "title": "Panel 2",
+    "meta": "Expositores"
+  },
+  {
+    "time": "14:00 – 15:00",
+    "category": "Receso",
+    "title": "Almuerzo"
+  },
+  {
+    "time": "15:00 – 16:00",
+    "category": "Logistica",
+    "title": "Viaje a CENAM",
+    "photoFile": "viaje-cenam.jpg"
+  },
+  {
+    "time": "16:00 – 17:00",
+    "category": "Visita",
+    "title": "Visita a laboratorios CENAM",
+    "photoFile": "visita-cenam.jpg"
+  }
+]

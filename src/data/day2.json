@@ -1,0 +1,108 @@
+[
+  {
+    "time": "08:45 – 09:00",
+    "category": "Bienvenida",
+    "title": "Bienvenida",
+    "photoFile": "bienvenida.jpg"
+  },
+  {
+    "time": "09:00 – 09:30",
+    "category": "Ponencia",
+    "title": "Dr. Edmundo Gutiérrez - Panorama global del sector de semiconductores y oportunidades para México",
+    "meta": "SECIHTI / Kutsari",
+    "personName": "Edmundo Gutiérrez",
+    "photoFile": "edmundo-gutierrez.jpg",
+    "companyLogoFile": "secihti.png",
+    "bioParagraphs": [
+      "El Dr. Edmundo Antonio Gutiérrez Domínguez obtuvo el doctorado en ciencias de la Universidad Católica de Leuven en Bélgica, en el año 1993, donde se especializó en física y tecnología de dispositivos semiconductores. Es miembro del SNII nivel 3 y Fellow de la IEEE. Del año 2020 al 2024 fue director general del Instituto Nacional de Astrofísica, Óptica y Electrónica (INAOE) en Puebla.",
+      "En el sector privado ha sido gerente de diseño del \"Mexico Center for Semiconductor Technology\" de Motorola del año 2000 al 2002, y director técnico del \"Systems Research Center\" de Intel-Guadalajara del 2005 al 2007.",
+      "Durante su trayectoria científica ha publicado más de 150 trabajos en revistas científicas de circulación internacional y conferencias internacionales, y ha sido responsable de proyectos científicos de colaboración internacional con Intel, IBM, y GlobalFoundries."
+    ]
+  },
+  {
+    "time": "09:30 – 10:00",
+    "category": "Ponencia",
+    "title": "Dr. Julio César López",
+    "meta": "Principal Quality Manager · Skyworks Inc.",
+    "personName": "Julio César López",
+    "companyLogoFile": "skyworks.png"
+  },
+  {
+    "time": "10:00 – 10:30",
+    "category": "Ponencia",
+    "title": "Lic. Julio Galván",
+    "meta": "Industria Nacional de Autopartes",
+    "personName": "Julio Galván",
+    "photoFile": "julio-galvan.jpg",
+    "companyLogoFile": "ina.png"
+  },
+  {
+    "time": "10:30 – 11:00",
+    "category": "Ponencia",
+    "title": "Dr. Israel Mejía",
+    "meta": "Director de Operaciones · QSM",
+    "personName": "Israel Mejía",
+    "photoFile": "israel-mejia.jpg",
+    "companyLogoFile": "qsm.png",
+    "bioParagraphs": [
+      "Recibió su grado de licenciatura con honores por parte de la Escuela Superior de Ingeniería Eléctrica del Instituto Politécnico Nacional en 2003. Después de recibir su grado de Maestría (2006) y Doctorado en 2010 por parte del Departamento de Ingeniería Eléctrica del CINVESTAV Zacatenco, se incorporó a la University of Texas at Dallas como Investigador para el Departamento de Ingeniería y Materiales.",
+      "Como personal clave para la vinculación entre academia e industria, las actividades del Dr. Mejía incluyeron la dirección de grupos de investigación y desarrollo de tecnologías innovadoras en el área semiconductores. Ha trabajado en el desarrollo de tecnologías para empresas de base tecnológica y para proyectos de la industria semiconductora trasnacional. En 2016 la IEEE le otorgó la distinción de \"Senior Member\".",
+      "El Dr. Mejía fue el fundador de la Dirección de Microtecnologías (2018) y de la Dirección de Ingeniería Eléctrica y Electrónica (2021) en CIDESI; es co-fundador de las empresas WAND, Queretaro Semiconductores, QSM Semiconductors INC, RegentechMed INC y Bondtek. También es co-fundador y actual Presidente de la Red Mexicana de Microfabricación (MicroFabMX)."
+    ]
+  },
+  {
+    "time": "11:00 – 11:30",
+    "category": "Receso",
+    "title": "Coffee break y networking"
+  },
+  {
+    "time": "11:30 – 12:00",
+    "category": "Ponencia",
+    "title": "Michael Gaitan",
+    "meta": "NIST, Estados Unidos",
+    "personName": "Michael Gaitan",
+    "photoFile": "michael-gaitan.jpg"
+  },
+  {
+    "time": "12:00 – 12:30",
+    "category": "Panel",
+    "title": "Panel 3",
+    "meta": "Metrología para Semiconductores · Sistema InterAmericano de Metrología (SIM) — CENAM, CENAMEP, NIST, NRC",
+    "participants": [
+      { "honorific": "Mtro.", "name": "Javier Arias", "role": "Director General del CENAMEP (Panamá) y Vicepresidente del SIM", "photoFile": "javier-arias.jpg", "companyLogoFile": "cenamep.png" }
+    ]
+  },
+  {
+    "time": "12:30 – 13:30",
+    "category": "Panel",
+    "title": "Panel 4",
+    "meta": "Formación de Talento Especializado — CIDESI, UTEQ, TecNM, IPN, UNAM",
+    "participants": [
+      { "honorific": "Dra.", "name": "Delia Hurtado", "role": "Investigadora en Microelectrónica, UTEQ", "photoFile": "delia-hurtado.jpg" },
+      { "honorific": "Dra.", "name": "Yolanda Jiménez", "role": "Investigadora en Materiales Semiconductores, TecNM ITQ", "photoFile": "yolanda-jimenez.jpg" }
+    ]
+  },
+  {
+    "time": "13:30 – 14:00",
+    "category": "Panel",
+    "title": "Panel 5",
+    "meta": "CENAM — Capacidades presentes y futuras para la industria"
+  },
+  {
+    "time": "14:00 – 15:00",
+    "category": "Receso",
+    "title": "Almuerzo y networking"
+  },
+  {
+    "time": "15:00 – 15:30",
+    "category": "Logistica",
+    "title": "Viaje a CIDESI",
+    "photoFile": "viaje-cidesi.jpg"
+  },
+  {
+    "time": "15:30 – 17:00",
+    "category": "Visita",
+    "title": "Visita a laboratorios Microtecnologías CIDESI",
+    "photoFile": "visita-cidesi.jpg"
+  }
+]
